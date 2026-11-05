@@ -2,8 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
-import Form from '../components/Form.astro';
-import Consent from '../components/Consent.astro';
+import ContactDirect from '../components/ContactDirect.astro';
+import { company } from '../data/site';
 
 const reasons = [
   { icon: 'chart', title: 'Elastyczność na wymiar Twojego biznesu', text: 'Usługi skalowalne do specyfiki Twojego przedsiębiorstwa, pozwalające sprawnie reagować na zmieniające się potrzeby rynku.' },
@@ -14,9 +14,6 @@ const reasons = [
   { icon: 'card', title: 'Terminowe płatności', text: 'Przejrzyste zasady rozliczeń i uczciwe, terminowe płatności za każde zrealizowane zlecenie.' },
 ] as const;
 
-const vehicleTypes = ['Bus', 'Solówka', 'Zestaw'];
-const bodies = ['Firana', 'Chłodnia', 'Kontener', 'Izoterma', 'Ruchoma podłoga', 'Naczepa typu lekkiego', 'Inna'];
-const sets = ['Mega', 'Standard', 'ADR', 'Winda'];
 ---
 <Base
   title="Dla przewoźnika"
@@ -30,6 +27,7 @@ const sets = ['Mega', 'Standard', 'ADR', 'Winda'];
     image="/img/highway.webp"
   >
     <a class="btn btn--primary" href="#wspolpraca">Zapytaj o współpracę <Icon name="arrow" /></a>
+    <a class="btn btn--ghost" href={`tel:${company.phoneHref}`}><Icon name="phone" /> {company.phone}</a>
   </PageHero>
 
   <section class="section">
@@ -55,52 +53,22 @@ const sets = ['Mega', 'Standard', 'ADR', 'Winda'];
       <div class="aside reveal">
         <span class="eyebrow">Jesteś zainteresowany?</span>
         <h2>Zapytaj o współpracę</h2>
-        <p class="lead">Wypełnij krótki formularz. Nasz spedytor skontaktuje się z Tobą, aby omówić trasy i warunki.</p>
+        <p class="lead">Zadzwoń lub napisz do nas. Nasz spedytor omówi z Tobą trasy i warunki współpracy.</p>
         <div class="media aside-img"><img src="/img/fleet-yard.webp" alt="Ciągniki siodłowe na placu" loading="lazy" /></div>
       </div>
-      <div class="card reveal">
-        <Form subject="Współpraca: przewoźnik">
-          <div class="form-row">
-            <label class="field"><span>Imię i nazwisko <span class="req">*</span></span><input class="input" name="imie_nazwisko" required autocomplete="name" /></label>
-            <label class="field"><span>Firma <span class="req">*</span></span><input class="input" name="firma" required autocomplete="organization" /></label>
-          </div>
-          <div class="form-row">
-            <label class="field"><span>Telefon <span class="req">*</span></span><input class="input" name="telefon" type="tel" required autocomplete="tel" /></label>
-            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
-          </div>
-          <fieldset class="field">
-            <legend>Rodzaj transportu</legend>
-            <div class="chips">
-              {['Krajowy', 'Międzynarodowy'].map((v) => <label class="chip"><input type="checkbox" name="rodzaj_transportu" value={v} /><span>{v}</span></label>)}
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>Rodzaj współpracy</legend>
-            <div class="chips">
-              {['W jedną stronę', 'Pełne prowadzenie'].map((v) => <label class="chip"><input type="radio" name="rodzaj_wspolpracy" value={v} /><span>{v}</span></label>)}
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>Typ pojazdu</legend>
-            <div class="chips">
-              {vehicleTypes.map((v) => <label class="chip"><input type="checkbox" name="typ_pojazdu" value={v} /><span>{v}</span></label>)}
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>Zabudowa</legend>
-            <div class="chips">
-              {bodies.map((v) => <label class="chip"><input type="checkbox" name="zabudowa" value={v} /><span>{v}</span></label>)}
-            </div>
-          </fieldset>
-          <fieldset class="field">
-            <legend>Rodzaj zestawu naczepowego</legend>
-            <div class="chips">
-              {sets.map((v) => <label class="chip"><input type="checkbox" name="zestaw" value={v} /><span>{v}</span></label>)}
-            </div>
-          </fieldset>
-          <label class="field"><span>Dodatkowe informacje</span><textarea class="input" name="wiadomosc" placeholder="Liczba pojazdów, preferowane kierunki, baza..."></textarea></label>
-          <Consent />
-        </Form>
+      <div class="reveal">
+        <ContactDirect
+          subject="Współpraca: przewoźnik"
+          checklistTitle="Co warto podać na start"
+          checklist={[
+            'Nazwa firmy i NIP',
+            'Transport krajowy czy międzynarodowy',
+            'W jedną stronę czy pełne prowadzenie',
+            'Typ pojazdu i zabudowa (np. firana, chłodnia, Mega)',
+            'Liczba pojazdów',
+            'Preferowane kierunki i baza',
+          ]}
+        />
       </div>
     </div>
   </section>
@@ -113,7 +81,7 @@ const sets = ['Mega', 'Standard', 'ADR', 'Winda'];
   .r-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); margin-bottom: 22px; }
   .reason h3 { margin-bottom: 10px; }
   .reason p { color: var(--muted); }
-  .form-layout { display: grid; gap: clamp(32px, 5vw, 64px); grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; }
+  .form-layout { display: grid; gap: clamp(32px, 5vw, 64px); grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: center; }
   .aside { position: sticky; top: 112px; display: grid; gap: 18px; }
   .aside-img { margin-top: 12px; }
   @media (max-width: 960px) {

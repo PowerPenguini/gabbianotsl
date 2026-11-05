@@ -15,17 +15,18 @@ npm run preview   # podgląd wersji produkcyjnej
 
 ## Struktura
 
-- `src/data/site.ts`: dane firmy, zespół, usługi, opinie, typy naczep, adres endpointu formularzy
+- `src/data/site.ts`: dane firmy (telefon, e-maile, adres), zespół, usługi, opinie, typy naczep
 - `src/layouts/Base.astro`: wspólny szablon (SEO, nagłówek, stopka)
-- `src/components/`: nagłówek, stopka, sekcje wielokrotnego użytku, formularz
+- `src/components/`: nagłówek, stopka, sekcje wielokrotnego użytku, `ContactDirect` (bloki telefon + e-mail)
 - `src/pages/`: podstrony (te same adresy URL co na obecnej stronie WordPress)
 - `src/styles/global.css`: kolory marki, typografia, przyciski, formularze
 - `public/img/`: zoptymalizowane zdjęcia (WebP) i logo
 
+## Kontakt zamiast formularzy
+
+Strona celowo nie ma formularzy. Wszystkie wezwania do działania prowadzą do telefonu (`tel:`)
+lub e-maila (`mailto:` z gotowym tematem i listą informacji do podania).
+
 ## Do uzupełnienia przed publikacją
 
-1. **Formularze**: ustaw `FORM_ENDPOINT` w `src/data/site.ts` (np. Formspree, Web3Forms lub własne API).
-   Dopóki jest pusty, formularz otwiera program pocztowy z gotową wiadomością do `office@g-tsl.com`.
-   Upload CV w zakładce Kariera działa tylko z endpointem.
-2. **Polityka prywatności**: `src/pages/polityka-prywatnosci.astro` zawiera tymczasową treść.
-3. **Numer biura**: na obecnej stronie widnieje `+42 278 75 74`. Link `tel:` zakłada `+48 42 278 75 74` (numer stacjonarny w Łodzi). Do potwierdzenia.
+1. **Polityka prywatności**: `src/pages/polityka-prywatnosci.astro` zawiera tymczasową treść.

@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import { company } from '../data/site';
+
+interface Props {
+  subject: string;
+  email?: string;
+  phone?: string;
+  phoneNote?: string;
+  checklistTitle?: string;
+  checklist?: string[];
+}
+const {
+  subject,
+  email = company.office,
+  phone = company.phone,
+  phoneNote = '',
+  checklistTitle = 'W wiadomości podaj',
+  checklist = [],
+} = Astro.props;
+
+const tel = phone === company.phone ? company.phoneHref : phone.replace(/\s/g, '');
+const body = checklist.length ? `${checklist.map((c) => `${c}: `).join('\n')}\n` : '';
+const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
+---
+<div class="direct">
+  <a class="tile tile--phone" href={`tel:${tel}`}>
+    <span class="t-icon"><Icon name="phone" size={26} /></span>
+    <span class="t-label">Zadzwoń</span>
+    <span class="t-value">{phone}</span>
+    {phoneNote && <span class="t-note">{phoneNote}</span>}
+  </a>
+  <a class="tile" href={mailto}>
+    <span class="t-icon"><Icon name="mail" size={26} /></span>
+    <span class="t-label">Napisz e-mail</span>
+    <span class="t-value">{email}</span>
+    <span class="t-note">Temat: „{subject}”</span>
+  </a>
+  {checklist.length > 0 && (
+    <div class="hint">
+      <p class="h-title">{checklistTitle}</p>
+      <ul class="checks">{checklist.map((c) => <li>{c}</li>)}</ul>
+    </div>
+  )}
+</div>
+
+<style>
+  .direct { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+  .tile {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    border: 1px solid var(--line);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    min-width: 0;
+  }
+  .tile:hover { border-color: var(--orange); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .tile--phone { background: var(--ink); border-color: var(--ink); }
+  .tile--phone .t-label { color: rgb(255 255 255 / 0.6); }
+  .tile--phone .t-value { color: var(--white); }
+  .tile--phone .t-note { color: rgb(255 255 255 / 0.55); }
+  .tile--phone .t-icon { background: var(--orange); color: var(--white); }
+  .t-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: grid; place-items: center;
+    background: var(--orange-50); color: var(--orange);
+    margin-bottom: 14px;
+  }
+  .t-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .t-value { font-size: clamp(1.25rem, 2.4vw, 1.6rem); font-weight: 800; color: var(--ink); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  .t-note { font-size: 0.9rem; color: var(--muted); }
+  .hint { grid-column: 1 / -1; padding: 28px; border-radius: var(--radius-lg); background: var(--surface); }
+  .h-title { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+  .hint .checks { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  :global(.section--tint) .hint { background: var(--white); border: 1px solid var(--line); }
+  @media (max-width: 640px) { .direct { grid-template-columns: 1fr; } }
+</style>

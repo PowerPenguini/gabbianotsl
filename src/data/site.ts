@@ -3,7 +3,7 @@ export const company = {
   legalName: 'Gabbiano TSL sp. z o.o.',
   street: 'ul. Jana Kilińskiego 193/2.5',
   city: '93-126 Łódź',
-  phone: '+42 278 75 74',
+  phone: '+48 42 278 75 74',
   phoneHref: '+48422787574',
   office: 'office@g-tsl.com',
   accounting: 'accounting@g-tsl.com',
@@ -31,7 +31,7 @@ export const people = [
   {
     name: 'Andżelika Cieślak-Wieteska',
     role: 'Kadry i księgowość',
-    phone: '+42 278 75 74',
+    phone: '+48 42 278 75 74',
     email: 'accounting@g-tsl.com',
   },
   {
@@ -170,9 +170,3 @@ export const trailers = [
     text: 'Platforma o obniżonym profilu do przewozu maszyn, konstrukcji stalowych i ciężkich ładunków ponadgabarytowych.',
   },
 ];
-
-/**
- * Adres endpointu formularzy (np. Formspree, Web3Forms, własne API).
- * Dopóki jest pusty, formularze otwierają gotową wiadomość e-mail w programie pocztowym.
- */
-export const FORM_ENDPOINT = '';

@@ -1,81 +1,91 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import Form from '../components/Form.astro';
-import Consent from '../components/Consent.astro';
 import ContactPeople from '../components/ContactPeople.astro';
 import { company } from '../data/site';
 ---
 <Base
   title="Kontakt"
-  description="Skontaktuj się z GABBIANO TSL. Biuro: ul. Jana Kilińskiego 193/2.5, 93-126 Łódź. Telefon, e-mail i formularz kontaktowy."
+  description="Skontaktuj się z GABBIANO TSL. Biuro: ul. Jana Kilińskiego 193/2.5, 93-126 Łódź. Telefon +48 42 278 75 74, e-mail office@g-tsl.com."
 >
-  <section class="section">
-    <div class="container contact">
-      <div class="info reveal">
+  <section class="section top">
+    <div class="container">
+      <div class="section-head">
         <span class="eyebrow">Kontakt</span>
         <h1>Skontaktuj się z nami</h1>
-        <p class="lead">Masz pytanie o wycenę, współpracę lub dostępność floty? Napisz lub zadzwoń, odpowiemy najszybciej, jak to możliwe.</p>
-        <ul class="tiles">
-          <li>
-            <div class="ti"><Icon name="pin" /></div>
-            <div><strong>Adres</strong><a href={company.mapsUrl} target="_blank" rel="noopener">{company.street}<br />{company.city}</a></div>
-          </li>
-          <li>
-            <div class="ti"><Icon name="phone" /></div>
-            <div><strong>Telefon</strong><a href={`tel:${company.phoneHref}`}>{company.phone}</a></div>
-          </li>
-          <li>
-            <div class="ti"><Icon name="mail" /></div>
-            <div><strong>Biuro</strong><a href={`mailto:${company.office}`}>{company.office}</a></div>
-          </li>
-          <li>
-            <div class="ti"><Icon name="mail" /></div>
-            <div><strong>Kadry i księgowość</strong><a href={`mailto:${company.accounting}`}>{company.accounting}</a></div>
-          </li>
-        </ul>
+        <p class="lead">Masz pytanie o wycenę, współpracę lub dostępność floty? Zadzwoń albo napisz, odpowiemy najszybciej, jak to możliwe.</p>
       </div>
-      <div class="card reveal">
-        <h2 class="form-title">Formularz kontaktowy</h2>
-        <Form subject="Zapytanie ze strony gabbianotsl.com">
-          <div class="form-row">
-            <label class="field"><span>Imię i nazwisko <span class="req">*</span></span><input class="input" name="imie_nazwisko" required autocomplete="name" /></label>
-            <label class="field"><span>Firma</span><input class="input" name="firma" autocomplete="organization" /></label>
-          </div>
-          <div class="form-row">
-            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
-            <label class="field"><span>Telefon</span><input class="input" name="telefon" type="tel" autocomplete="tel" /></label>
-          </div>
-          <label class="field"><span>Wiadomość <span class="req">*</span></span><textarea class="input" name="wiadomosc" required></textarea></label>
-          <Consent />
-        </Form>
+
+      <div class="main">
+        <a class="big big--phone reveal" href={`tel:${company.phoneHref}`}>
+          <span class="b-icon"><Icon name="phone" size={28} /></span>
+          <span class="b-label">Biuro</span>
+          <span class="b-value">{company.phone}</span>
+          <span class="b-cta">Zadzwoń <Icon name="arrow" size={18} /></span>
+        </a>
+        <a class="big reveal" href={`mailto:${company.office}`}>
+          <span class="b-icon"><Icon name="mail" size={28} /></span>
+          <span class="b-label">E-mail</span>
+          <span class="b-value">{company.office}</span>
+          <span class="b-cta">Napisz <Icon name="arrow" size={18} /></span>
+        </a>
+      </div>
+
+      <div class="sub">
+        <a class="small reveal" href={`mailto:${company.accounting}`}>
+          <span class="s-icon"><Icon name="mail" /></span>
+          <span><strong>Kadry i księgowość</strong>{company.accounting}</span>
+        </a>
+        <a class="small reveal" href={company.mapsUrl} target="_blank" rel="noopener">
+          <span class="s-icon"><Icon name="pin" /></span>
+          <span><strong>Adres biura</strong>{company.street}, {company.city}</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="map-wrap">
+  <ContactPeople title="Porozmawiaj <em>bezpośrednio</em> z naszym zespołem" />
+
+  <section class="section">
     <div class="container">
       <div class="map reveal">
         <iframe title="Mapa dojazdu do GABBIANO TSL" src={company.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </section>
-
-  <ContactPeople title="Zespół <em>GABBIANO TSL</em>" tint={false} />
 </Base>
 
 <style>
-  .contact { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; }
-  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin-bottom: 18px; }
-  .tiles { list-style: none; padding: 0; margin: 36px 0 0; display: grid; gap: 14px; }
-  .tiles li { display: flex; gap: 18px; align-items: center; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); }
-  .tiles strong { display: block; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-  .tiles a { font-weight: 700; color: var(--ink); word-break: break-word; }
-  .tiles a:hover { color: var(--orange); }
-  .ti { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); }
-  .form-title { font-size: 1.5rem; margin-bottom: 24px; }
-  .map-wrap { padding-bottom: var(--section); }
+  .top { padding-bottom: clamp(56px, 8vw, 96px); }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+  .main { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+  .big {
+    display: grid; gap: 6px; align-content: start;
+    padding: clamp(28px, 4vw, 48px);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    background: var(--white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    min-width: 0;
+  }
+  .big:hover { border-color: var(--orange); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .big--phone { background: var(--ink); border-color: var(--ink); }
+  .big--phone .b-label { color: rgb(255 255 255 / 0.6); }
+  .big--phone .b-value { color: var(--white); }
+  .big--phone .b-icon { background: var(--orange); color: var(--white); }
+  .big--phone .b-cta { color: var(--white); }
+  .b-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); margin-bottom: 18px; }
+  .b-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .b-value { font-size: clamp(1.5rem, 3.2vw, 2.3rem); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; overflow-wrap: anywhere; line-height: 1.2; }
+  .b-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-weight: 700; color: var(--ink); }
+  .b-cta :global(svg) { color: var(--orange); }
+  .sub { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-top: 16px; }
+  .small { display: flex; gap: 16px; align-items: center; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--radius); transition: border-color 0.2s ease; min-width: 0; }
+  .small:hover { border-color: var(--orange); }
+  .small strong { display: block; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .small span:last-child { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+  .s-icon { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); }
   .map { border-radius: var(--radius-lg); overflow: hidden; height: 420px; background: var(--surface); border: 1px solid var(--line); }
   .map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.4); }
-  @media (max-width: 960px) { .contact { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .main, .sub { grid-template-columns: 1fr; } }
 </style>

@@ -2,8 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
-import Form from '../components/Form.astro';
-import Consent from '../components/Consent.astro';
+import ContactDirect from '../components/ContactDirect.astro';
+import { company } from '../data/site';
 
 const jobs = [
   { title: 'Praca w biurze', text: 'Spedycja, obsługa klienta i koordynacja przewozów w naszym biurze w Łodzi.', icon: 'users' },
@@ -33,7 +33,7 @@ const jobs = [
       </div>
       <div class="jobs">
         {jobs.map((j) => (
-          <a class="job reveal" href={`#aplikuj`} data-job={j.title}>
+          <a class="job reveal" href={`mailto:${company.office}?subject=${encodeURIComponent(`Aplikacja: ${j.title}`)}`}>
             <div class="j-icon"><Icon name={j.icon} /></div>
             <div class="j-body">
               <h3>{j.title}</h3>
@@ -49,49 +49,24 @@ const jobs = [
   <section class="section section--tint" id="aplikuj">
     <div class="container narrow">
       <div class="section-head section-head--center">
-        <span class="eyebrow">Formularz</span>
+        <span class="eyebrow">Jak aplikować</span>
         <h2>Aplikuj już dziś!</h2>
-        <p class="lead">Wypełnij formularz, a skontaktujemy się z wybranymi kandydatami.</p>
+        <p class="lead">Wyślij nam CV mailem lub zadzwoń. Skontaktujemy się z wybranymi kandydatami.</p>
       </div>
-      <div class="card reveal">
-        <Form subject="Aplikacja: kariera" submitLabel="Wyślij zgłoszenie" files>
-          <label class="field"><span>Stanowisko <span class="req">*</span></span>
-            <select class="input" name="stanowisko" required data-job-select>
-              <option value="">Wybierz stanowisko</option>
-              {jobs.map((j) => <option>{j.title}</option>)}
-            </select>
-          </label>
-          <div class="form-row">
-            <label class="field"><span>Imię <span class="req">*</span></span><input class="input" name="imie" required autocomplete="given-name" /></label>
-            <label class="field"><span>Nazwisko <span class="req">*</span></span><input class="input" name="nazwisko" required autocomplete="family-name" /></label>
-          </div>
-          <div class="form-row">
-            <label class="field"><span>Telefon <span class="req">*</span></span><input class="input" name="telefon" type="tel" required autocomplete="tel" /></label>
-            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
-          </div>
-          <div class="form-row">
-            <label class="field"><span>Ulica</span><input class="input" name="ulica" autocomplete="street-address" /></label>
-            <label class="field"><span>Miejscowość</span><input class="input" name="miejscowosc" autocomplete="address-level2" /></label>
-            <label class="field"><span>Kod pocztowy</span><input class="input" name="kod_pocztowy" autocomplete="postal-code" inputmode="numeric" placeholder="00-000" /></label>
-          </div>
-          <div class="form-row">
-            <label class="field"><span>Możliwa data zatrudnienia</span><input class="input" name="data_zatrudnienia" type="date" /></label>
-            <fieldset class="field">
-              <legend>Preferowany wymiar pracy</legend>
-              <div class="chips">
-                {['Pełny etat', 'Niepełny etat'].map((v) => <label class="chip"><input type="radio" name="wymiar" value={v} /><span>{v}</span></label>)}
-              </div>
-            </fieldset>
-          </div>
-          <label class="field"><span>Wykształcenie</span><input class="input" name="wyksztalcenie" /></label>
-          <label class="field"><span>Doświadczenie zawodowe</span><textarea class="input" name="doswiadczenie"></textarea></label>
-          <div class="form-row">
-            <label class="field"><span>Czego oczekujesz od pracodawcy?</span><input class="input" name="oczekiwania" /></label>
-            <label class="field"><span>Preferowane wynagrodzenie</span><input class="input" name="wynagrodzenie" /></label>
-          </div>
-          <label class="field"><span>CV (PDF, DOC)</span><input class="input file" name="cv" type="file" accept=".pdf,.doc,.docx" /></label>
-          <Consent />
-        </Form>
+      <div class="reveal">
+        <ContactDirect
+          subject="Aplikacja: kariera"
+          checklistTitle="W zgłoszeniu podaj"
+          checklist={[
+            'Stanowisko, na które aplikujesz',
+            'Imię, nazwisko i telefon',
+            'Możliwa data rozpoczęcia pracy',
+            'Preferowany wymiar pracy',
+            'Doświadczenie zawodowe',
+            'Oczekiwane wynagrodzenie',
+          ]}
+        />
+        <p class="cv-note">Pamiętaj, aby dołączyć CV do wiadomości.</p>
       </div>
     </div>
   </section>
@@ -116,12 +91,5 @@ const jobs = [
     .job { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
   }
   .narrow { max-width: 880px; }
-  .file { padding-top: 13px; }
+  .cv-note { text-align: center; margin-top: 20px; color: var(--muted); font-size: 0.95rem; }
 </style>
-
-<script>
-  const select = document.querySelector<HTMLSelectElement>('[data-job-select]');
-  document.querySelectorAll<HTMLAnchorElement>('[data-job]').forEach((a) =>
-    a.addEventListener('click', () => { if (select) select.value = a.dataset.job || ''; })
-  );
-</script>
