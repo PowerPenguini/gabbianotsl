@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import { people } from '../data/site';
+interface Props { title?: string; tint?: boolean }
+const { title = 'Skontaktuj się z nami <em>bezpośrednio</em>', tint = true } = Astro.props;
+---
+<section class:list={['section', { 'section--tint': tint }]}>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Nasz zespół</span>
+      <h2 set:html={title} />
+    </div>
+    <div class="people">
+      {people.map((p) => (
+        <article class="person reveal">
+          <div class="avatar" aria-hidden="true">{p.name.split(' ').map((s) => s[0]).slice(0, 2).join('')}</div>
+          <h3>{p.name}</h3>
+          <p class="role">{p.role}</p>
+          <div class="links">
+            <a href={`tel:${p.phone.replace(/\s/g, '')}`}><Icon name="phone" size={18} />{p.phone}</a>
+            <a href={`mailto:${p.email}`}><Icon name="mail" size={18} />{p.email}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  h2 :global(em) { font-style: normal; color: var(--orange); }
+  .people { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  .person {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .person:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: grid; place-items: center;
+    background: var(--ink); color: var(--white);
+    font-weight: 800; letter-spacing: 0.02em; margin-bottom: 22px;
+  }
+  .role { color: var(--muted); font-size: 0.95rem; margin-top: 4px; margin-bottom: 22px; }
+  .links { display: grid; gap: 10px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); }
+  .links a { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink); word-break: break-word; }
+  .links a:hover { color: var(--orange); }
+  .links :global(svg) { color: var(--orange); flex: none; }
+</style>

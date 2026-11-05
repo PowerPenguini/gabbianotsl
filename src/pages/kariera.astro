@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Form from '../components/Form.astro';
+import Consent from '../components/Consent.astro';
+
+const jobs = [
+  { title: 'Praca w biurze', text: 'Spedycja, obsługa klienta i koordynacja przewozów w naszym biurze w Łodzi.', icon: 'users' },
+  { title: 'Kierowca C+E', text: 'Transport krajowy i międzynarodowy nowoczesnymi zestawami.', icon: 'truck' },
+  { title: 'Staż / Praktyki', text: 'Poznaj branżę TSL od środka i rozwijaj się pod okiem doświadczonego zespołu.', icon: 'route' },
+] as const;
+---
+<Base
+  title="Kariera"
+  description="Dołącz do zespołu GABBIANO TSL. Szukamy pracowników biurowych, kierowców C+E oraz stażystów."
+  transparentHeader
+>
+  <PageHero
+    eyebrow="Kariera"
+    title="Dołącz do zespołu <em>GABBIANO TSL</em>"
+    text="Cenimy współpracę i zespołową atmosferę. Wierzymy, że efektywne działanie opiera się na wzajemnym wsparciu i zaufaniu."
+    image="/img/driver.webp"
+  >
+    <a class="btn btn--primary" href="#aplikuj">Aplikuj już dziś <Icon name="arrow" /></a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Aktualne oferty</span>
+        <h2>Kogo szukamy?</h2>
+      </div>
+      <div class="jobs">
+        {jobs.map((j) => (
+          <a class="job reveal" href={`#aplikuj`} data-job={j.title}>
+            <div class="j-icon"><Icon name={j.icon} /></div>
+            <div class="j-body">
+              <h3>{j.title}</h3>
+              <p>{j.text}</p>
+            </div>
+            <span class="link-arrow">Aplikuj <Icon name="arrow" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="aplikuj">
+    <div class="container narrow">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Formularz</span>
+        <h2>Aplikuj już dziś!</h2>
+        <p class="lead">Wypełnij formularz, a skontaktujemy się z wybranymi kandydatami.</p>
+      </div>
+      <div class="card reveal">
+        <Form subject="Aplikacja: kariera" submitLabel="Wyślij zgłoszenie" files>
+          <label class="field"><span>Stanowisko <span class="req">*</span></span>
+            <select class="input" name="stanowisko" required data-job-select>
+              <option value="">Wybierz stanowisko</option>
+              {jobs.map((j) => <option>{j.title}</option>)}
+            </select>
+          </label>
+          <div class="form-row">
+            <label class="field"><span>Imię <span class="req">*</span></span><input class="input" name="imie" required autocomplete="given-name" /></label>
+            <label class="field"><span>Nazwisko <span class="req">*</span></span><input class="input" name="nazwisko" required autocomplete="family-name" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Telefon <span class="req">*</span></span><input class="input" name="telefon" type="tel" required autocomplete="tel" /></label>
+            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Ulica</span><input class="input" name="ulica" autocomplete="street-address" /></label>
+            <label class="field"><span>Miejscowość</span><input class="input" name="miejscowosc" autocomplete="address-level2" /></label>
+            <label class="field"><span>Kod pocztowy</span><input class="input" name="kod_pocztowy" autocomplete="postal-code" inputmode="numeric" placeholder="00-000" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Możliwa data zatrudnienia</span><input class="input" name="data_zatrudnienia" type="date" /></label>
+            <fieldset class="field">
+              <legend>Preferowany wymiar pracy</legend>
+              <div class="chips">
+                {['Pełny etat', 'Niepełny etat'].map((v) => <label class="chip"><input type="radio" name="wymiar" value={v} /><span>{v}</span></label>)}
+              </div>
+            </fieldset>
+          </div>
+          <label class="field"><span>Wykształcenie</span><input class="input" name="wyksztalcenie" /></label>
+          <label class="field"><span>Doświadczenie zawodowe</span><textarea class="input" name="doswiadczenie"></textarea></label>
+          <div class="form-row">
+            <label class="field"><span>Czego oczekujesz od pracodawcy?</span><input class="input" name="oczekiwania" /></label>
+            <label class="field"><span>Preferowane wynagrodzenie</span><input class="input" name="wynagrodzenie" /></label>
+          </div>
+          <label class="field"><span>CV (PDF, DOC)</span><input class="input file" name="cv" type="file" accept=".pdf,.doc,.docx" /></label>
+          <Consent />
+        </Form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .jobs { display: grid; gap: 16px; }
+  .job {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .job:hover { border-color: var(--orange); box-shadow: var(--shadow); }
+  .j-icon { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); }
+  .j-body p { color: var(--muted); margin-top: 4px; }
+  @media (max-width: 640px) {
+    .job { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
+  }
+  .narrow { max-width: 880px; }
+  .file { padding-top: 13px; }
+</style>
+
+<script>
+  const select = document.querySelector<HTMLSelectElement>('[data-job-select]');
+  document.querySelectorAll<HTMLAnchorElement>('[data-job]').forEach((a) =>
+    a.addEventListener('click', () => { if (select) select.value = a.dataset.job || ''; })
+  );
+</script>

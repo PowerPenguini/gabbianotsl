@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const photos = [
+  { src: '/img/fleet-yard.webp', alt: 'Ciągniki siodłowe GABBIANO TSL na placu', wide: true },
+  { src: '/img/fleet-trailer.webp', alt: 'Naczepa firanka podczas postoju', tall: true },
+  { src: '/img/truck-highway.webp', alt: 'Zestaw ciężarowy na autostradzie' },
+  { src: '/img/truck-road.webp', alt: 'Zestaw ciężarowy w trasie' },
+  { src: '/img/trucks-autumn.webp', alt: 'Zestawy w trasie jesienią', wide: true },
+  { src: '/img/warehouse.webp', alt: 'Załadunek palet w magazynie' },
+];
+---
+<Base title="Galeria" description="Zdjęcia floty i realizacji GABBIANO TSL.">
+  <section class="section head">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Galeria</span>
+        <h1>Nasza flota w trasie</h1>
+        <p class="lead">Kilka ujęć z codziennej pracy naszych zestawów i zespołu.</p>
+      </div>
+      <div class="gallery">
+        {photos.map((p) => (
+          <a class:list={['ph reveal', { wide: p.wide, tall: p.tall }]} href={p.src} data-lightbox>
+            <img src={p.src} alt={p.alt} loading="lazy" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <dialog class="lightbox" data-lb aria-label="Podgląd zdjęcia">
+    <form method="dialog"><button class="close" aria-label="Zamknij">×</button></form>
+    <img alt="" data-lb-img />
+  </dialog>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .head { padding-bottom: 0; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+  .gallery {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 260px;
+    grid-auto-flow: dense;
+  }
+  .ph { border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); cursor: zoom-in; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .ph:hover img { transform: scale(1.04); }
+  .wide { grid-column: span 2; }
+  .tall { grid-row: span 2; }
+  @media (max-width: 760px) {
+    .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+  }
+  @media (max-width: 480px) {
+    .gallery { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .wide { grid-column: auto; }
+    .tall { grid-row: span 2; }
+  }
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 1400px); max-height: 90vh; overflow: visible; }
+  .lightbox::backdrop { background: rgb(10 10 12 / 0.9); }
+  .lightbox img { max-width: 100%; max-height: 88vh; border-radius: 12px; }
+  .close {
+    position: absolute; top: -52px; right: 0;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 0; background: var(--white); color: var(--ink);
+    font-size: 26px; line-height: 1; cursor: pointer;
+  }
+</style>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lb]');
+  const img = document.querySelector<HTMLImageElement>('[data-lb-img]');
+  document.querySelectorAll<HTMLAnchorElement>('[data-lightbox]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (!dlg || !img || typeof dlg.showModal !== 'function') return;
+      e.preventDefault();
+      img.src = a.href;
+      img.alt = a.querySelector('img')?.alt || '';
+      dlg.showModal();
+    });
+  });
+  dlg?.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+</script>

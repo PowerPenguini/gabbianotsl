@@ -1,0 +1,15 @@
+{
+  "name": "gabbiano-tsl",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Nowa strona internetowa GABBIANO TSL sp. z o.o.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^7.4.7"
+  }
+}

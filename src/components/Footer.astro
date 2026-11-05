@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { company, nav } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <div class="top">
+      <div class="about">
+        <img src="/img/logo-light.png" alt="GABBIANO TSL" width="152" height="52" loading="lazy" />
+        <p>Transport krajowy i międzynarodowy, spedycja oraz magazynowanie. Łączymy doświadczenie z nowoczesną technologią, aby Twój ładunek dotarł bezpiecznie i na czas.</p>
+      </div>
+      <div>
+        <h3>Firma</h3>
+        <ul>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/wycena-transportu/">Wycena transportu</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <ul class="contact">
+          <li><Icon name="pin" size={18} /><a href={company.mapsUrl} target="_blank" rel="noopener">{company.street}<br />{company.city}</a></li>
+          <li><Icon name="phone" size={18} /><a href={`tel:${company.phoneHref}`}>{company.phone}</a></li>
+          <li><Icon name="mail" size={18} /><a href={`mailto:${company.office}`}>{company.office}</a></li>
+          <li><Icon name="mail" size={18} /><a href={`mailto:${company.accounting}`}>{company.accounting}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© {year} {company.legalName}. Wszelkie prawa zastrzeżone.</span>
+      <a href="/polityka-prywatnosci/">Polityka prywatności</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--ink); color: #a4a7ad; padding-top: clamp(56px, 8vw, 88px); font-size: 0.95rem; }
+  .top {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1.6fr 1fr 1.2fr;
+    padding-bottom: 56px;
+  }
+  .about img { height: 44px; width: auto; margin-bottom: 20px; }
+  .about p { max-width: 40ch; }
+  h3 { color: var(--white); font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  a { transition: color 0.15s ease; }
+  a:hover { color: var(--white); }
+  .contact li { display: flex; gap: 12px; align-items: flex-start; }
+  .contact :global(svg) { color: var(--orange); flex: none; margin-top: 3px; }
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 24px 0 32px;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.86rem;
+  }
+  @media (max-width: 860px) {
+    .top { grid-template-columns: 1fr 1fr; }
+    .about { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .top { grid-template-columns: 1fr; }
+  }
+</style>

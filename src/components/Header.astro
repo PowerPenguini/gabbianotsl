@@ -1,0 +1,161 @@
+---
+import Icon from './Icon.astro';
+import { nav } from '../data/site';
+interface Props { transparent?: boolean }
+const { transparent = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+---
+<header class:list={['site-header', { 'is-transparent': transparent }]} data-header>
+  <div class="container bar">
+    <a href="/" class="brand" aria-label="GABBIANO TSL, strona główna">
+      <img class="logo logo--light" src="/img/logo-light.png" alt="GABBIANO TSL" width="152" height="52" />
+      <img class="logo logo--dark" src="/img/logo.png" alt="" width="152" height="52" />
+    </a>
+    <nav class="nav" aria-label="Główna nawigacja">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a href="/wycena-transportu/" class="btn btn--primary cta">Wycena transportu</a>
+    <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+      <Icon name="menu" class="i-open" />
+      <Icon name="close" class="i-close" />
+    </button>
+  </div>
+  <div class="mobile" id="mobile-menu" data-mobile hidden>
+    <ul>
+      {nav.map((item) => (
+        <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}<Icon name="arrow" size={20} /></a></li>
+      ))}
+    </ul>
+    <a href="/wycena-transportu/" class="btn btn--primary">Wycena transportu</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .site-header.is-transparent {
+    position: fixed;
+    inset: 0 0 auto;
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .site-header.is-transparent.is-scrolled,
+  .site-header.is-transparent.is-open {
+    background: rgb(23 24 26 / 0.92);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-color: rgb(255 255 255 / 0.08);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 80px;
+  }
+  .brand { flex: none; display: block; }
+  .logo { height: 44px; width: auto; }
+  .logo--light { display: none; }
+  .is-transparent .logo--light { display: block; }
+  .is-transparent .logo--dark { display: none; }
+
+  .nav { margin-left: auto; }
+  .nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .nav a {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--graphite);
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .nav a:hover { background: var(--surface); }
+  .nav a[aria-current='page'] { color: var(--orange); }
+  .is-transparent .nav a { color: rgb(255 255 255 / 0.82); }
+  .is-transparent .nav a:hover { color: var(--white); background: rgb(255 255 255 / 0.08); }
+  .is-transparent .nav a[aria-current='page'] { color: var(--white); }
+
+  .cta { min-height: 44px; padding: 0 20px; font-size: 0.92rem; }
+
+  .burger {
+    display: none;
+    margin-left: auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .is-transparent .burger { background: transparent; color: var(--white); border-color: rgb(255 255 255 / 0.25); }
+  .burger :global(.i-close) { display: none; }
+  .is-open .burger :global(.i-open) { display: none; }
+  .is-open .burger :global(.i-close) { display: block; }
+
+  .mobile {
+    border-top: 1px solid var(--line);
+    padding: 12px var(--gutter) 24px;
+    background: var(--white);
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+  }
+  .is-transparent .mobile { background: var(--ink); border-color: rgb(255 255 255 / 0.08); }
+  .mobile ul { list-style: none; margin: 0 0 16px; padding: 0; }
+  .mobile li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 4px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .is-transparent .mobile li a { color: var(--white); border-color: rgb(255 255 255 / 0.08); }
+  .mobile li a :global(svg) { color: var(--orange); }
+  .mobile .btn { width: 100%; }
+
+  @media (max-width: 1080px) {
+    .nav, .cta { display: none; }
+    .burger { display: inline-flex; }
+  }
+  @media (min-width: 1081px) {
+    .mobile { display: none !important; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile]');
+  if (header && burger && menu) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Zamknij menu' : 'Otwórz menu');
+      menu.hidden = !open;
+    };
+    burger.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

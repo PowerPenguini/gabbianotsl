@@ -1,0 +1,226 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ContactPeople from '../components/ContactPeople.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { services, strengths, testimonials } from '../data/site';
+
+const strengthIcons = ['users', 'eye', 'clock', 'truck', 'handshake'] as const;
+const pillars = [
+  { icon: 'gps', title: 'Nowoczesne rozwiązania', text: 'Oprogramowanie TMS i telematyka pozwalają nam monitorować każdy etap przewozu.' },
+  { icon: 'route', title: 'Elastyczność', text: 'Dopasowujemy trasy, terminy i rodzaj pojazdu do specyfiki Twojego ładunku.' },
+  { icon: 'shield', title: 'Doświadczenie', text: 'Wieloletnia praktyka w TSL i zespół o wysokiej kulturze pracy.' },
+] as const;
+---
+<Base
+  title="GABBIANO TSL"
+  description="GABBIANO TSL z Łodzi: transport krajowy i międzynarodowy, spedycja oraz magazynowanie. Terminowo, bezpiecznie i z indywidualnym podejściem."
+  transparentHeader
+>
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="/img/truck-highway.webp" alt="" fetchpriority="high" />
+    <div class="hero-shade"></div>
+    <div class="container hero-inner">
+      <span class="eyebrow">Transport · Spedycja · Logistyka</span>
+      <h1>Wieloletnie doświadczenie w&nbsp;<em>TSL</em></h1>
+      <p class="lead">Wysoko wykwalifikowana kadra, oprogramowanie TMS i nowoczesna telematyka. Wspólnie tworzymy najlepsze indywidualne rozwiązania logistyczne dla naszych klientów.</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="/wycena-transportu/">Zamów wycenę <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href="/dla-przewoznika/">Współpraca dla przewoźników</a>
+      </div>
+    </div>
+    <div class="container">
+      <ul class="hero-strip" aria-label="Za co jesteśmy doceniani">
+        {strengths.map((s, i) => (
+          <li><Icon name={strengthIcons[i]} size={22} />{s}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- SERVICES OVERVIEW -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nasza oferta</span>
+        <h2>Kompleksowa obsługa Twojego łańcucha dostaw</h2>
+        <p class="lead">Od pojedynczego zlecenia po stałą współpracę. Zajmujemy się transportem, spedycją i magazynowaniem, abyś mógł skupić się na swoim biznesie.</p>
+      </div>
+      <div class="svc-grid">
+        {services.map((s, i) => (
+          <a class="svc reveal" href={s.href} style={`transition-delay:${i * 80}ms`}>
+            <div class="svc-img"><img src={s.image} alt="" loading="lazy" width="800" height="600" /></div>
+            <div class="svc-body">
+              <span class="svc-num">0{i + 1}</span>
+              <h3>{s.eyebrow}</h3>
+              <p>{s.title}</p>
+              <span class="link-arrow">Dowiedz się więcej <Icon name="arrow" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES DETAIL -->
+  {services.map((s, i) => (
+    <section class:list={['section', { 'section--tint': i % 2 === 0 }]} id={s.id}>
+      <div class:list={['container grid-2 detail', { flip: i % 2 === 1 }]}>
+        <div class="media reveal"><img src={s.image} alt={s.eyebrow} loading="lazy" width="800" height="600" /></div>
+        <div class="reveal">
+          <span class="eyebrow">{s.eyebrow}</span>
+          <h2>{s.title}</h2>
+          <p class="lead detail-text">{s.text}</p>
+          <ul class="checks">{s.points.map((p) => <li>{p}</li>)}</ul>
+          <a class="link-arrow detail-link" href={s.href}>Więcej informacji <Icon name="arrow" /></a>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- WHY US -->
+  <section class="section section--dark">
+    <div class="container grid-2">
+      <div class="reveal">
+        <span class="eyebrow">Dlaczego GABBIANO TSL</span>
+        <h2>Jesteśmy do Twojej dyspozycji</h2>
+        <p class="why-text">W dążeniu do bezbłędnej realizacji usług transportowych i logistycznych kładziemy szczególny nacisk na ciągłe doskonalenie procesów. Opieramy się na innowacyjności, efektywności operacyjnej i zaawansowanych systemach monitorowania, aby zoptymalizować każdy etap transportu.</p>
+        <a class="btn btn--primary" href="/kontakt/">Skontaktuj się z nami <Icon name="arrow" /></a>
+      </div>
+      <div class="pillars">
+        {pillars.map((p) => (
+          <div class="pillar reveal">
+            <div class="pillar-icon"><Icon name={p.icon} /></div>
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Opinie</span>
+        <h2>Co mówią nasi partnerzy</h2>
+      </div>
+      <div class="quotes">
+        {testimonials.map((t) => (
+          <figure class="quote reveal">
+            <Icon name="quote" size={30} class="quote-icon" />
+            <blockquote>{t.text}</blockquote>
+            <figcaption>{t.who}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+  <ContactPeople />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: min(100svh, 920px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: var(--ink);
+    color: var(--white);
+    overflow: hidden;
+  }
+  .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% center; z-index: -2; }
+  .hero-shade {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgb(23 24 26 / 0.55) 0%, rgb(23 24 26 / 0) 30%),
+      linear-gradient(95deg, rgb(23 24 26 / 0.95) 0%, rgb(23 24 26 / 0.75) 42%, rgb(23 24 26 / 0.15) 100%);
+  }
+  .hero-inner { display: grid; gap: 24px; justify-items: start; padding-top: 160px; padding-bottom: 56px; }
+  .hero h1 { color: var(--white); max-width: 14ch; }
+  .hero h1 em { font-style: normal; color: var(--orange); }
+  .hero .lead { color: rgb(255 255 255 / 0.8); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .hero-strip {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 22px 0 0;
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .hero-strip li { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.95rem; color: rgb(255 255 255 / 0.9); }
+  .hero-strip :global(svg) { color: var(--orange); flex: none; }
+  @media (max-width: 1000px) {
+    .hero-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .hero-strip { grid-template-columns: 1fr; gap: 12px; }
+    .hero-actions .btn { width: 100%; }
+  }
+
+  .svc-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .svc {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--white);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .svc:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+  .svc-img { aspect-ratio: 16 / 10; overflow: hidden; }
+  .svc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .svc:hover .svc-img img { transform: scale(1.05); }
+  .svc-body { padding: 28px; display: grid; gap: 10px; flex: 1; align-content: start; }
+  .svc-num { font-size: 0.8rem; font-weight: 800; color: var(--orange); letter-spacing: 0.1em; }
+  .svc-body p { color: var(--muted); margin-bottom: 10px; }
+  .svc .link-arrow { margin-top: auto; }
+
+  .detail-text { margin: 20px 0 28px; }
+  .detail-link { margin-top: 32px; }
+  @media (min-width: 900px) {
+    .flip > :first-child { order: 2; }
+  }
+
+  .why-text { margin: 20px 0 32px; max-width: 56ch; }
+  .pillars { display: grid; gap: 16px; }
+  .pillar {
+    display: flex;
+    gap: 20px;
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .pillar-icon {
+    flex: none; width: 52px; height: 52px; border-radius: 14px;
+    display: grid; place-items: center;
+    background: rgb(240 91 44 / 0.14); color: var(--orange);
+  }
+  .pillar h3 { margin-bottom: 6px; }
+
+  .quotes { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+  .quote {
+    margin: 0;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .quote :global(.quote-icon) { color: var(--orange); }
+  blockquote { margin: 0; font-size: 1.05rem; font-weight: 500; color: var(--ink); line-height: 1.6; flex: 1; }
+  figcaption { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+</style>

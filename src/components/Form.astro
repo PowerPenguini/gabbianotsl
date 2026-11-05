@@ -1,0 +1,68 @@
+---
+import { FORM_ENDPOINT, company } from '../data/site';
+interface Props { subject: string; to?: string; submitLabel?: string; files?: boolean }
+const { subject, to = company.office, submitLabel = 'Wyślij', files = false } = Astro.props;
+---
+<form
+  class="form"
+  method="post"
+  action={FORM_ENDPOINT || undefined}
+  enctype={files ? 'multipart/form-data' : undefined}
+  data-form
+  data-endpoint={FORM_ENDPOINT}
+  data-to={to}
+  data-subject={subject}
+>
+  <input type="hidden" name="_subject" value={subject} />
+  <slot />
+  <div class="submit">
+    <button class="btn btn--primary" type="submit">{submitLabel}</button>
+    <p class="status" role="status" aria-live="polite" data-status></p>
+  </div>
+</form>
+<style>
+  .submit { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 4px; }
+  .status { font-size: 0.92rem; font-weight: 600; color: var(--muted); }
+  .status.ok { color: #1f7a4d; }
+  .status.err { color: #b42318; }
+</style>
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const status = form.querySelector<HTMLElement>('[data-status]')!;
+      const data = new FormData(form);
+      const endpoint = form.dataset.endpoint;
+      if (endpoint) {
+        status.className = 'status';
+        status.textContent = 'Wysyłanie...';
+        try {
+          const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.className = 'status ok';
+          status.textContent = 'Dziękujemy! Odezwiemy się najszybciej, jak to możliwe.';
+        } catch {
+          status.className = 'status err';
+          status.textContent = `Nie udało się wysłać formularza. Napisz do nas: ${form.dataset.to}`;
+        }
+        return;
+      }
+      const lines: string[] = [];
+      const seen = new Set<string>();
+      for (const [key, value] of data.entries()) {
+        if (key.startsWith('_') || key === 'zgoda' || value instanceof File) continue;
+        const label = form.querySelector(`[name="${CSS.escape(key)}"]`)?.closest('.field')?.querySelector('span, legend')?.textContent?.replace('*', '').trim() || key;
+        const all = data.getAll(key).filter((v) => typeof v === 'string' && v).join(', ');
+        if (!all || seen.has(key)) continue;
+        seen.add(key);
+        lines.push(`${label}: ${all}`);
+      }
+      const href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(form.dataset.subject || '')}&body=${encodeURIComponent(lines.join('\n'))}`;
+      window.location.href = href;
+      status.className = 'status ok';
+      status.textContent = 'Otworzyliśmy Twój program pocztowy z gotową wiadomością. Wystarczy ją wysłać.';
+    });
+  });
+</script>

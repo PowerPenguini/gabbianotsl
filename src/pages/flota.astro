@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { trailers } from '../data/site';
+---
+<Base
+  title="Flota"
+  description="Flota GABBIANO TSL: specjalizujemy się w transporcie naczepami Mega. Organizujemy również przewozy firankami, chłodniami, izotermami i naczepami specjalistycznymi."
+  transparentHeader
+>
+  <PageHero
+    eyebrow="Flota"
+    title="Usługi opieramy na <em>sprawdzonych</em> rozwiązaniach"
+    text="Nowoczesne, regularnie serwisowane pojazdy minimalizują ryzyko uszkodzenia lub utraty ładunku. To kluczowe szczególnie w transporcie międzynarodowym, gdzie towar pokonuje duże odległości."
+    image="/img/fleet-yard.webp"
+  >
+    <a class="btn btn--primary" href="/wycena-transportu/">Zamów wycenę <Icon name="arrow" /></a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div class="reveal">
+        <span class="eyebrow">Nasza flota</span>
+        <h2>Specjalizujemy się w naczepach <span class="accent">Mega</span></h2>
+        <p class="lead intro">Pomagamy klientom profesjonalnie zorganizować i bezpiecznie dostarczyć towar zgodnie z harmonogramem. Naczepy Mega pozwalają nam oferować nie tylko pełną organizację dostaw, ale także kompleksowe rozwiązania dla nietypowych i wymagających ładunków.</p>
+        <ul class="checks">
+          <li>Regularnie serwisowane, nowoczesne pojazdy</li>
+          <li>Wyposażenie do zabezpieczania ładunku: pasy, kątowniki, belki rozporowe</li>
+          <li>Monitoring GPS i raportowanie statusu przewozu</li>
+        </ul>
+      </div>
+      <div class="media media--tall reveal"><img src="/img/fleet-trailer.webp" alt="Naczepa GABBIANO TSL na placu" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Typy naczep</span>
+        <h2>Sprawdź szczegóły</h2>
+        <p class="lead">Organizujemy przewozy z wykorzystaniem wielu typów zabudowy. Poniżej znajdziesz krótki przewodnik po ich zastosowaniach.</p>
+      </div>
+      <div class="trailers">
+        {trailers.map((t, i) => (
+          <article class:list={['trailer reveal', { featured: 'tag' in t }]}>
+            <div class="t-head">
+              <span class="t-num">{String(i + 1).padStart(2, '0')}</span>
+              {'tag' in t && <span class="t-tag">{t.tag}</span>}
+            </div>
+            <h3>{t.name}</h3>
+            <p>{t.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Masz pytania o dobór naczepy?" text="Powiedz nam, co przewozisz. Doradzimy najlepszy typ pojazdu i przygotujemy wycenę." />
+</Base>
+
+<style>
+  .accent { color: var(--orange); }
+  .intro { margin: 20px 0 28px; }
+  .media--tall { aspect-ratio: 4 / 5; max-height: 640px; }
+  .trailers { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
+  .trailer {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .trailer:hover { border-color: var(--orange); box-shadow: var(--shadow); }
+  .trailer p { color: var(--muted); font-size: 0.95rem; }
+  .t-head { display: flex; justify-content: space-between; align-items: center; }
+  .t-num { font-size: 0.8rem; font-weight: 800; color: var(--orange); letter-spacing: 0.1em; }
+  .t-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--orange); color: var(--white); }
+  .featured { background: var(--ink); border-color: var(--ink); }
+  .featured h3 { color: var(--white); }
+  .featured p { color: #b8bbc0; }
+</style>

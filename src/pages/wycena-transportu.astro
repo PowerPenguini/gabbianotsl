@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Form from '../components/Form.astro';
+import Consent from '../components/Consent.astro';
+import { company } from '../data/site';
+
+const steps = [
+  { t: 'Wyślij zapytanie', d: 'Podaj trasę, termin i informacje o ładunku.' },
+  { t: 'Otrzymaj wycenę', d: 'Przygotujemy przejrzystą i konkurencyjną ofertę.' },
+  { t: 'Realizacja', d: 'Odbieramy i dostarczamy ładunek zgodnie z harmonogramem.' },
+];
+---
+<Base
+  title="Wycena transportu"
+  description="Bezpłatna wycena transportu krajowego i międzynarodowego. Podaj trasę, termin i rodzaj ładunku, a GABBIANO TSL przygotuje ofertę."
+>
+  <section class="section">
+    <div class="container quote">
+      <div class="aside reveal">
+        <span class="eyebrow">Wycena transportu</span>
+        <h1>Skorzystaj z szybkiej wyceny już dziś</h1>
+        <p class="lead">Dostosujemy się do specyfiki Twojego ładunku, terminu i szczególnych wymagań. Proponujemy transparentne i konkurencyjne ceny, aby zapewnić doskonałą obsługę i pełną klarowność finansową.</p>
+        <ol class="steps">
+          {steps.map((s, i) => (
+            <li><span class="n">{i + 1}</span><div><strong>{s.t}</strong><p>{s.d}</p></div></li>
+          ))}
+        </ol>
+        <div class="direct">
+          <p>Wolisz porozmawiać?</p>
+          <a href={`tel:${company.phoneHref}`}><Icon name="phone" size={20} />{company.phone}</a>
+          <a href={`mailto:${company.office}`}><Icon name="mail" size={20} />{company.office}</a>
+        </div>
+      </div>
+      <div class="card reveal">
+        <Form subject="Wycena transportu" submitLabel="Wyślij zapytanie">
+          <p class="group">Trasa i termin</p>
+          <div class="form-row">
+            <label class="field"><span>Miejsce załadunku <span class="req">*</span></span><input class="input" name="miejsce_zaladunku" required placeholder="Miasto, kod pocztowy, kraj" /></label>
+            <label class="field"><span>Miejsce rozładunku <span class="req">*</span></span><input class="input" name="miejsce_rozladunku" required placeholder="Miasto, kod pocztowy, kraj" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Data załadunku <span class="req">*</span></span><input class="input" name="data_zaladunku" type="date" required /></label>
+            <label class="field"><span>Data rozładunku</span><input class="input" name="data_rozladunku" type="date" /></label>
+          </div>
+          <p class="group">Dane kontaktowe</p>
+          <div class="form-row">
+            <label class="field"><span>Imię <span class="req">*</span></span><input class="input" name="imie" required autocomplete="given-name" /></label>
+            <label class="field"><span>Nazwisko <span class="req">*</span></span><input class="input" name="nazwisko" required autocomplete="family-name" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Firma</span><input class="input" name="firma" autocomplete="organization" /></label>
+            <label class="field"><span>NIP</span><input class="input" name="nip" inputmode="numeric" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>Telefon <span class="req">*</span></span><input class="input" name="telefon" type="tel" required autocomplete="tel" /></label>
+            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
+          </div>
+          <label class="field"><span>Informacje o ładunku</span><textarea class="input" name="wiadomosc" placeholder="Rodzaj towaru, waga, liczba palet, wymiary, wymagania (np. ADR, chłodnia, winda)"></textarea></label>
+          <Consent />
+        </Form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .quote { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); align-items: start; }
+  .aside { position: sticky; top: 112px; }
+  h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); margin-bottom: 18px; }
+  .steps { list-style: none; padding: 0; margin: 36px 0; display: grid; gap: 20px; }
+  .steps li { display: flex; gap: 16px; align-items: flex-start; }
+  .n { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--white); font-weight: 800; font-size: 0.9rem; }
+  .steps strong { color: var(--ink); }
+  .steps p { color: var(--muted); font-size: 0.95rem; }
+  .direct { padding: 24px; border-radius: var(--radius); background: var(--surface); display: grid; gap: 10px; }
+  .direct p { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .direct a { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); }
+  .direct a:hover { color: var(--orange); }
+  .direct :global(svg) { color: var(--orange); }
+  .group { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-top: 8px; }
+  .group:first-of-type { margin-top: 0; }
+  @media (max-width: 960px) {
+    .quote { grid-template-columns: 1fr; }
+    .aside { position: static; }
+  }
+</style>

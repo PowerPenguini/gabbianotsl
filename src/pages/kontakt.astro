@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Form from '../components/Form.astro';
+import Consent from '../components/Consent.astro';
+import ContactPeople from '../components/ContactPeople.astro';
+import { company } from '../data/site';
+---
+<Base
+  title="Kontakt"
+  description="Skontaktuj się z GABBIANO TSL. Biuro: ul. Jana Kilińskiego 193/2.5, 93-126 Łódź. Telefon, e-mail i formularz kontaktowy."
+>
+  <section class="section">
+    <div class="container contact">
+      <div class="info reveal">
+        <span class="eyebrow">Kontakt</span>
+        <h1>Skontaktuj się z nami</h1>
+        <p class="lead">Masz pytanie o wycenę, współpracę lub dostępność floty? Napisz lub zadzwoń, odpowiemy najszybciej, jak to możliwe.</p>
+        <ul class="tiles">
+          <li>
+            <div class="ti"><Icon name="pin" /></div>
+            <div><strong>Adres</strong><a href={company.mapsUrl} target="_blank" rel="noopener">{company.street}<br />{company.city}</a></div>
+          </li>
+          <li>
+            <div class="ti"><Icon name="phone" /></div>
+            <div><strong>Telefon</strong><a href={`tel:${company.phoneHref}`}>{company.phone}</a></div>
+          </li>
+          <li>
+            <div class="ti"><Icon name="mail" /></div>
+            <div><strong>Biuro</strong><a href={`mailto:${company.office}`}>{company.office}</a></div>
+          </li>
+          <li>
+            <div class="ti"><Icon name="mail" /></div>
+            <div><strong>Kadry i księgowość</strong><a href={`mailto:${company.accounting}`}>{company.accounting}</a></div>
+          </li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h2 class="form-title">Formularz kontaktowy</h2>
+        <Form subject="Zapytanie ze strony gabbianotsl.com">
+          <div class="form-row">
+            <label class="field"><span>Imię i nazwisko <span class="req">*</span></span><input class="input" name="imie_nazwisko" required autocomplete="name" /></label>
+            <label class="field"><span>Firma</span><input class="input" name="firma" autocomplete="organization" /></label>
+          </div>
+          <div class="form-row">
+            <label class="field"><span>E-mail <span class="req">*</span></span><input class="input" name="email" type="email" required autocomplete="email" /></label>
+            <label class="field"><span>Telefon</span><input class="input" name="telefon" type="tel" autocomplete="tel" /></label>
+          </div>
+          <label class="field"><span>Wiadomość <span class="req">*</span></span><textarea class="input" name="wiadomosc" required></textarea></label>
+          <Consent />
+        </Form>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-wrap">
+    <div class="container">
+      <div class="map reveal">
+        <iframe title="Mapa dojazdu do GABBIANO TSL" src={company.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <ContactPeople title="Zespół <em>GABBIANO TSL</em>" tint={false} />
+</Base>
+
+<style>
+  .contact { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin-bottom: 18px; }
+  .tiles { list-style: none; padding: 0; margin: 36px 0 0; display: grid; gap: 14px; }
+  .tiles li { display: flex; gap: 18px; align-items: center; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+  .tiles strong { display: block; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .tiles a { font-weight: 700; color: var(--ink); word-break: break-word; }
+  .tiles a:hover { color: var(--orange); }
+  .ti { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--orange-50); color: var(--orange); }
+  .form-title { font-size: 1.5rem; margin-bottom: 24px; }
+  .map-wrap { padding-bottom: var(--section); }
+  .map { border-radius: var(--radius-lg); overflow: hidden; height: 420px; background: var(--surface); border: 1px solid var(--line); }
+  .map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.4); }
+  @media (max-width: 960px) { .contact { grid-template-columns: 1fr; } }
+</style>

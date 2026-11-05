@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ContactPeople from '../components/ContactPeople.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const offer = [
+  {
+    id: 'transport',
+    icon: 'truck',
+    title: 'Transport krajowy i międzynarodowy',
+    image: '/img/truck-road.webp',
+    paragraphs: [
+      'Zapewniamy nie tylko skuteczne przemieszczanie towarów, ale również bezpieczeństwo i kompleksowe zabezpieczenie ładunku. Nasze pojazdy są wyposażone w niezbędne elementy do profesjonalnego transportu, takie jak pasy z napinaczami, kątowniki oraz belki rozporowe, gwarantujące stabilność ładunku na każdym etapie podróży.',
+      'Wyróżnia nas także profesjonalizm kierowców. To doświadczeni specjaliści, którzy sprawnie realizują trasy krajowe i międzynarodowe oraz skutecznie zabezpieczają towar przed uszkodzeniem czy utratą.',
+    ],
+  },
+  {
+    id: 'spedycja',
+    icon: 'route',
+    title: 'Usługi spedycyjne',
+    image: '/img/global.webp',
+    paragraphs: [
+      'Aktywnie nadzorujemy cały proces logistyczny, od chwili produkcji towaru aż do momentu jego bezpiecznego dostarczenia do odbiorcy.',
+      'Śledzimy każdy etap produkcji i transportu, aby minimalizować ryzyko opóźnień. Planujemy optymalne trasy z uwzględnieniem czasu i kosztów, a nasz zespół koordynuje działania i reaguje na zmieniające się warunki, utrzymując ciągłość dostaw.',
+    ],
+  },
+  {
+    id: 'magazynowanie',
+    icon: 'box',
+    title: 'Magazynowanie',
+    image: '/img/warehouse.webp',
+    paragraphs: [
+      'Dostosowujemy się do indywidualnych potrzeb klientów. Oferujemy elastyczne rozwiązania, które zapewniają nie tylko przestrzeń do przechowywania towarów, ale także spełniają specyficzne wymagania Twojej branży.',
+      'Naszym celem jest nie tylko składowanie, ale również optymalizacja procesów magazynowych: płynny przepływ towarów, efektywność i szybkość obsługi.',
+    ],
+  },
+] as const;
+
+const tech = [
+  { icon: 'gps', title: 'Zintegrowany system GPS', text: 'Lokalizacja pojazdów w czasie rzeczywistym, połączona z oprogramowaniem mobilnym kierowców.' },
+  { icon: 'card', title: 'Uniwersalne urządzenia poboru opłat', text: 'Sprawny przejazd po drogach płatnych w całej Europie, bez zbędnych postojów.' },
+  { icon: 'report', title: 'Raportowanie statusu', text: 'Wysoki standard informowania o postępie realizacji usługi na każdym etapie.' },
+] as const;
+---
+<Base
+  title="Dla klienta"
+  description="Transport krajowy i międzynarodowy, usługi spedycyjne i magazynowanie. Poznaj ofertę GABBIANO TSL dla klientów biznesowych."
+  transparentHeader
+>
+  <PageHero
+    eyebrow="Dla klienta"
+    title="Zaufaj ekspertom <em>TSL</em>"
+    text="Dostarczamy towary na czas i tworzymy wartość dodaną dla naszych klientów: elastyczność, znajomość specyfiki branży i dbałość o indywidualne potrzeby."
+    image="/img/trucks-autumn.webp"
+  >
+    <a class="btn btn--primary" href="/wycena-transportu/">Zamów wycenę <Icon name="arrow" /></a>
+    <a class="btn btn--ghost" href="/kontakt/">Kontakt</a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Oferta</span>
+        <h2>Co znajduje się w naszej ofercie?</h2>
+        <p class="lead">Kompleksowe rozwiązania logistyczne: transport krajowy i międzynarodowy, magazynowanie oraz spedycja. Sprawdzona flota gwarantuje terminowe i bezpieczne dostawy, a dedykowani specjaliści dbają o płynność całego procesu.</p>
+      </div>
+      <nav class="jump" aria-label="Przejdź do usługi">
+        {offer.map((o) => (
+          <a href={`#${o.id}`}><Icon name={o.icon} size={20} />{o.title}</a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  {offer.map((o, i) => (
+    <section class:list={['section', { 'section--tint': i % 2 === 0 }]} id={o.id}>
+      <div class:list={['container grid-2', { flip: i % 2 === 1 }]}>
+        <div class="media reveal"><img src={o.image} alt={o.title} loading="lazy" width="800" height="600" /></div>
+        <div class="reveal">
+          <span class="eyebrow">0{i + 1}</span>
+          <h2>{o.title}</h2>
+          <div class="prose">{o.paragraphs.map((p) => <p>{p}</p>)}</div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="grid-2 drivers">
+        <div class="reveal">
+          <span class="eyebrow">Stawiamy na profesjonalizm</span>
+          <h2>Bezpieczne trasy, doświadczeni kierowcy</h2>
+          <p class="drivers-text">Nasi kierowcy korzystają z nowoczesnych narzędzi nawigacyjnych, komunikacyjnych i bezpieczeństwa. Dbamy o ich komfort i efektywność, zapewniając pełne wsparcie na drodze. Rozwiązania systemowe, którymi dysponujemy, pozwalają świadczyć usługi na najwyższym poziomie.</p>
+        </div>
+        <div class="media reveal"><img src="/img/driver.webp" alt="Kierowca GABBIANO TSL przy ciągniku siodłowym" loading="lazy" width="800" height="600" /></div>
+      </div>
+      <div class="tech">
+        {tech.map((t) => (
+          <div class="tech-item reveal">
+            <div class="tech-icon"><Icon name={t.icon} /></div>
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+  <ContactPeople />
+</Base>
+
+<style>
+  .jump { display: flex; flex-wrap: wrap; gap: 12px; }
+  .jump a {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 20px; border-radius: 999px;
+    border: 1px solid var(--line); font-weight: 700; color: var(--ink);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .jump a:hover { border-color: var(--orange); color: var(--orange); }
+  .jump :global(svg) { color: var(--orange); }
+  .prose { display: grid; gap: 16px; margin-top: 22px; color: var(--muted); }
+  @media (min-width: 900px) { .flip > :first-child { order: 2; } }
+  .drivers-text { margin-top: 20px; max-width: 56ch; }
+  .tech { display: grid; gap: 20px; margin-top: clamp(48px, 6vw, 72px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+  .tech-item { padding: 28px; border-radius: var(--radius-lg); background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.08); }
+  .tech-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: rgb(240 91 44 / 0.14); color: var(--orange); margin-bottom: 20px; }
+  .tech-item h3 { margin-bottom: 8px; }
+</style>
