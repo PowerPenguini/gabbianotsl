@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
@@ -24,7 +25,7 @@ const reasons = [
     eyebrow="Dla przewoźnika"
     title="Dołącz do grona <em>zadowolonych</em> przewoźników"
     text="Całodobowa komunikacja, organizacja transportu na terenie całej Europy, przejrzyste zasady i pełne zrozumienie dla dynamicznego świata transportu drogowego."
-    image="/img/highway.webp"
+    image={u('/img/highway.webp')}
   >
     <a class="btn btn--primary" href="#wspolpraca">Zapytaj o współpracę <Icon name="arrow" /></a>
     <a class="btn btn--ghost" href={`tel:${company.phoneHref}`}><Icon name="phone" /> {company.phone}</a>
@@ -54,7 +55,7 @@ const reasons = [
         <span class="eyebrow">Jesteś zainteresowany?</span>
         <h2>Zapytaj o współpracę</h2>
         <p class="lead">Zadzwoń lub napisz do nas. Nasz spedytor omówi z Tobą trasy i warunki współpracy.</p>
-        <div class="media aside-img"><img src="/img/fleet-yard.webp" alt="Ciągniki siodłowe na placu" loading="lazy" /></div>
+        <div class="media aside-img"><img src={u('/img/fleet-yard.webp')} alt="Ciągniki siodłowe na placu" loading="lazy" /></div>
       </div>
       <div class="reveal">
         <ContactDirect

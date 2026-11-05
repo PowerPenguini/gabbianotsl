@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import ContactPeople from '../components/ContactPeople.astro';
@@ -19,15 +20,15 @@ const pillars = [
 >
   <!-- HERO -->
   <section class="hero">
-    <img class="hero-bg" src="/img/truck-highway.webp" alt="" fetchpriority="high" />
+    <img class="hero-bg" src={u('/img/truck-highway.webp')} alt="" fetchpriority="high" />
     <div class="hero-shade"></div>
     <div class="container hero-inner">
       <span class="eyebrow">Transport · Spedycja · Logistyka</span>
       <h1>Wieloletnie doświadczenie w&nbsp;<em>TSL</em></h1>
       <p class="lead">Wysoko wykwalifikowana kadra, oprogramowanie TMS i nowoczesna telematyka. Wspólnie tworzymy najlepsze indywidualne rozwiązania logistyczne dla naszych klientów.</p>
       <div class="hero-actions">
-        <a class="btn btn--primary" href="/wycena-transportu/">Zamów wycenę <Icon name="arrow" /></a>
-        <a class="btn btn--ghost" href="/dla-przewoznika/">Współpraca dla przewoźników</a>
+        <a class="btn btn--primary" href={u('/wycena-transportu/')}>Zamów wycenę <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href={u('/dla-przewoznika/')}>Współpraca dla przewoźników</a>
       </div>
     </div>
     <div class="container">
@@ -86,7 +87,7 @@ const pillars = [
         <span class="eyebrow">Dlaczego GABBIANO TSL</span>
         <h2>Jesteśmy do Twojej dyspozycji</h2>
         <p class="why-text">W dążeniu do bezbłędnej realizacji usług transportowych i logistycznych kładziemy szczególny nacisk na ciągłe doskonalenie procesów. Opieramy się na innowacyjności, efektywności operacyjnej i zaawansowanych systemach monitorowania, aby zoptymalizować każdy etap transportu.</p>
-        <a class="btn btn--primary" href="/kontakt/">Skontaktuj się z nami <Icon name="arrow" /></a>
+        <a class="btn btn--primary" href={u('/kontakt/')}>Skontaktuj się z nami <Icon name="arrow" /></a>
       </div>
       <div class="pillars">
         {pillars.map((p) => (

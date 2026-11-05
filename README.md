@@ -4,6 +4,8 @@
 
 Odświeżona, statyczna strona internetowa [gabbianotsl.com](https://gabbianotsl.com), zbudowana w [Astro](https://astro.build).
 
+Podgląd online: https://powerpenguini.github.io/gabbianotsl/
+
 ## Uruchomienie
 
 ```bash
@@ -21,6 +23,12 @@ npm run preview   # podgląd wersji produkcyjnej
 - `src/pages/`: podstrony (te same adresy URL co na obecnej stronie WordPress)
 - `src/styles/global.css`: kolory marki, typografia, przyciski, formularze
 - `public/img/`: zoptymalizowane zdjęcia (WebP) i logo
+
+## Publikacja
+
+Każdy push na `main` buduje stronę i publikuje ją na GitHub Pages (`.github/workflows/deploy.yml`).
+Ścieżka bazowa `/gabbianotsl` jest ustawiona w `astro.config.mjs`. Przy przejściu na własną domenę
+ustaw `SITE_URL=https://gabbianotsl.com` i `BASE_PATH=/`. Linki wewnętrzne zawsze buduj przez `u()` z `src/lib/url.ts`.
 
 ## Kontakt zamiast formularzy
 

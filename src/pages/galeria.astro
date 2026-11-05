@@ -1,14 +1,15 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 
 const photos = [
-  { src: '/img/fleet-yard.webp', alt: 'Ciągniki siodłowe GABBIANO TSL na placu', wide: true },
-  { src: '/img/fleet-trailer.webp', alt: 'Naczepa firanka podczas postoju', tall: true },
-  { src: '/img/truck-highway.webp', alt: 'Zestaw ciężarowy na autostradzie' },
-  { src: '/img/truck-road.webp', alt: 'Zestaw ciężarowy w trasie' },
-  { src: '/img/trucks-autumn.webp', alt: 'Zestawy w trasie jesienią', wide: true },
-  { src: '/img/warehouse.webp', alt: 'Załadunek palet w magazynie' },
+  { src: u('/img/fleet-yard.webp'), alt: 'Ciągniki siodłowe GABBIANO TSL na placu', wide: true },
+  { src: u('/img/fleet-trailer.webp'), alt: 'Naczepa firanka podczas postoju', tall: true },
+  { src: u('/img/truck-highway.webp'), alt: 'Zestaw ciężarowy na autostradzie' },
+  { src: u('/img/truck-road.webp'), alt: 'Zestaw ciężarowy w trasie' },
+  { src: u('/img/trucks-autumn.webp'), alt: 'Zestawy w trasie jesienią', wide: true },
+  { src: u('/img/warehouse.webp'), alt: 'Załadunek palet w magazynie' },
 ];
 ---
 <Base title="Galeria" description="Zdjęcia floty i realizacji GABBIANO TSL.">

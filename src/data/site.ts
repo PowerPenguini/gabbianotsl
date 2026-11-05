@@ -1,3 +1,4 @@
+import { u } from '../lib/url';
 export const company = {
   name: 'GABBIANO TSL',
   legalName: 'Gabbiano TSL sp. z o.o.',
@@ -13,12 +14,12 @@ export const company = {
 };
 
 export const nav = [
-  { href: '/dla-klienta/', label: 'Dla klienta' },
-  { href: '/dla-przewoznika/', label: 'Dla przewoźnika' },
-  { href: '/flota/', label: 'Flota' },
-  { href: '/galeria/', label: 'Galeria' },
-  { href: '/kariera/', label: 'Kariera' },
-  { href: '/kontakt/', label: 'Kontakt' },
+  { href: u('/dla-klienta/'), label: 'Dla klienta' },
+  { href: u('/dla-przewoznika/'), label: 'Dla przewoźnika' },
+  { href: u('/flota/'), label: 'Flota' },
+  { href: u('/galeria/'), label: 'Galeria' },
+  { href: u('/kariera/'), label: 'Kariera' },
+  { href: u('/kontakt/'), label: 'Kontakt' },
 ];
 
 export const people = [
@@ -61,8 +62,8 @@ export const services = [
       'Kompletna obsługa łańcuchów dostaw',
       'Flota dostosowana do potrzeb ładunku',
     ],
-    image: '/img/truck-road.webp',
-    href: '/dla-klienta/#transport',
+    image: u('/img/truck-road.webp'),
+    href: u('/dla-klienta/#transport'),
   },
   {
     id: 'spedycja',
@@ -70,8 +71,8 @@ export const services = [
     title: 'Stałe zlecenia i terminowe płatności',
     text: 'Tworzymy solidne fundamenty dla naszych partnerów biznesowych. Stałe zlecenia zapewniają stabilność i pewność działania, a przejrzyste rozliczenia budują zaufanie.',
     points: ['Terminowe płatności', 'Stałe zlecenia', 'Indywidualne podejście'],
-    image: '/img/highway.webp',
-    href: '/dla-przewoznika/',
+    image: u('/img/highway.webp'),
+    href: u('/dla-przewoznika/'),
   },
   {
     id: 'magazynowanie',
@@ -83,8 +84,8 @@ export const services = [
       'Precyzyjna organizacja przestrzeni',
       'Elastyczne warunki przechowywania',
     ],
-    image: '/img/warehouse.webp',
-    href: '/dla-klienta/#magazynowanie',
+    image: u('/img/warehouse.webp'),
+    href: u('/dla-klienta/#magazynowanie'),
   },
 ];
 

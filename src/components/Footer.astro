@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Icon from './Icon.astro';
 import { company, nav } from '../data/site';
 const year = new Date().getFullYear();
@@ -7,14 +8,14 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="top">
       <div class="about">
-        <img src="/img/logo-light.png" alt="GABBIANO TSL" width="152" height="52" loading="lazy" />
+        <img src={u('/img/logo-light.png')} alt="GABBIANO TSL" width="152" height="52" loading="lazy" />
         <p>Transport krajowy i międzynarodowy, spedycja oraz magazynowanie. Łączymy doświadczenie z nowoczesną technologią, aby Twój ładunek dotarł bezpiecznie i na czas.</p>
       </div>
       <div>
         <h3>Firma</h3>
         <ul>
           {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-          <li><a href="/wycena-transportu/">Wycena transportu</a></li>
+          <li><a href={u('/wycena-transportu/')}>Wycena transportu</a></li>
         </ul>
       </div>
       <div>
@@ -29,7 +30,7 @@ const year = new Date().getFullYear();
     </div>
     <div class="bottom">
       <span>© {year} {company.legalName}. Wszelkie prawa zastrzeżone.</span>
-      <a href="/polityka-prywatnosci/">Polityka prywatności</a>
+      <a href={u('/polityka-prywatnosci/')}>Polityka prywatności</a>
     </div>
   </div>
 </footer>

@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
@@ -10,7 +11,7 @@ const offer = [
     id: 'transport',
     icon: 'truck',
     title: 'Transport krajowy i międzynarodowy',
-    image: '/img/truck-road.webp',
+    image: u('/img/truck-road.webp'),
     paragraphs: [
       'Zapewniamy nie tylko skuteczne przemieszczanie towarów, ale również bezpieczeństwo i kompleksowe zabezpieczenie ładunku. Nasze pojazdy są wyposażone w niezbędne elementy do profesjonalnego transportu, takie jak pasy z napinaczami, kątowniki oraz belki rozporowe, gwarantujące stabilność ładunku na każdym etapie podróży.',
       'Wyróżnia nas także profesjonalizm kierowców. To doświadczeni specjaliści, którzy sprawnie realizują trasy krajowe i międzynarodowe oraz skutecznie zabezpieczają towar przed uszkodzeniem czy utratą.',
@@ -20,7 +21,7 @@ const offer = [
     id: 'spedycja',
     icon: 'route',
     title: 'Usługi spedycyjne',
-    image: '/img/global.webp',
+    image: u('/img/global.webp'),
     paragraphs: [
       'Aktywnie nadzorujemy cały proces logistyczny, od chwili produkcji towaru aż do momentu jego bezpiecznego dostarczenia do odbiorcy.',
       'Śledzimy każdy etap produkcji i transportu, aby minimalizować ryzyko opóźnień. Planujemy optymalne trasy z uwzględnieniem czasu i kosztów, a nasz zespół koordynuje działania i reaguje na zmieniające się warunki, utrzymując ciągłość dostaw.',
@@ -30,7 +31,7 @@ const offer = [
     id: 'magazynowanie',
     icon: 'box',
     title: 'Magazynowanie',
-    image: '/img/warehouse.webp',
+    image: u('/img/warehouse.webp'),
     paragraphs: [
       'Dostosowujemy się do indywidualnych potrzeb klientów. Oferujemy elastyczne rozwiązania, które zapewniają nie tylko przestrzeń do przechowywania towarów, ale także spełniają specyficzne wymagania Twojej branży.',
       'Naszym celem jest nie tylko składowanie, ale również optymalizacja procesów magazynowych: płynny przepływ towarów, efektywność i szybkość obsługi.',
@@ -53,10 +54,10 @@ const tech = [
     eyebrow="Dla klienta"
     title="Zaufaj ekspertom <em>TSL</em>"
     text="Dostarczamy towary na czas i tworzymy wartość dodaną dla naszych klientów: elastyczność, znajomość specyfiki branży i dbałość o indywidualne potrzeby."
-    image="/img/trucks-autumn.webp"
+    image={u('/img/trucks-autumn.webp')}
   >
-    <a class="btn btn--primary" href="/wycena-transportu/">Zamów wycenę <Icon name="arrow" /></a>
-    <a class="btn btn--ghost" href="/kontakt/">Kontakt</a>
+    <a class="btn btn--primary" href={u('/wycena-transportu/')}>Zamów wycenę <Icon name="arrow" /></a>
+    <a class="btn btn--ghost" href={u('/kontakt/')}>Kontakt</a>
   </PageHero>
 
   <section class="section">
@@ -95,7 +96,7 @@ const tech = [
           <h2>Bezpieczne trasy, doświadczeni kierowcy</h2>
           <p class="drivers-text">Nasi kierowcy korzystają z nowoczesnych narzędzi nawigacyjnych, komunikacyjnych i bezpieczeństwa. Dbamy o ich komfort i efektywność, zapewniając pełne wsparcie na drodze. Rozwiązania systemowe, którymi dysponujemy, pozwalają świadczyć usługi na najwyższym poziomie.</p>
         </div>
-        <div class="media reveal"><img src="/img/driver.webp" alt="Kierowca GABBIANO TSL przy ciągniku siodłowym" loading="lazy" width="800" height="600" /></div>
+        <div class="media reveal"><img src={u('/img/driver.webp')} alt="Kierowca GABBIANO TSL przy ciągniku siodłowym" loading="lazy" width="800" height="600" /></div>
       </div>
       <div class="tech">
         {tech.map((t) => (

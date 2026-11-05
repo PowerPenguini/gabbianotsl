@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Icon from './Icon.astro';
 import { nav, company } from '../data/site';
 interface Props { transparent?: boolean }
@@ -7,9 +8,9 @@ const path = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 <header class:list={['site-header', { 'is-transparent': transparent }]} data-header>
   <div class="container bar">
-    <a href="/" class="brand" aria-label="GABBIANO TSL, strona główna">
-      <img class="logo logo--light" src="/img/logo-light.png" alt="GABBIANO TSL" width="152" height="52" />
-      <img class="logo logo--dark" src="/img/logo.png" alt="" width="152" height="52" />
+    <a href={u('/')} class="brand" aria-label="GABBIANO TSL, strona główna">
+      <img class="logo logo--light" src={u('/img/logo-light.png')} alt="GABBIANO TSL" width="152" height="52" />
+      <img class="logo logo--dark" src={u('/img/logo.png')} alt="" width="152" height="52" />
     </a>
     <nav class="nav" aria-label="Główna nawigacja">
       <ul>
@@ -19,7 +20,7 @@ const path = Astro.url.pathname.replace(/\/?$/, '/');
       </ul>
     </nav>
     <a href={`tel:${company.phoneHref}`} class="hdr-phone"><Icon name="phone" size={18} />{company.phone}</a>
-    <a href="/wycena-transportu/" class="btn btn--primary cta">Wycena transportu</a>
+    <a href={u('/wycena-transportu/')} class="btn btn--primary cta">Wycena transportu</a>
     <button class="burger" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu" data-burger>
       <Icon name="menu" class="i-open" />
       <Icon name="close" class="i-close" />
